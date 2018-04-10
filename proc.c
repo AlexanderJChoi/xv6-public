@@ -314,6 +314,28 @@ wait(int* status)
   }
 }
 
+int
+waitpid(int pid, int* status, int options)
+{
+  struct proc *p;
+  struct proc *curproc = myproc();
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if(p->parent->pid  == pid)
+      return pid
+  }
+  if(curproc->killed) {
+    return -1;
+  }
+}
+
+
+
+
+
+}
+
+
+
 //PAGEBREAK: 42
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
