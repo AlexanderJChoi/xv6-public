@@ -279,6 +279,7 @@ wait(int* status)
   struct proc *curproc = myproc();
   if(status != NULL)
     status = &curproc->exit_status; 
+
   acquire(&ptable.lock);
   for(;;){
     // Scan through table looking for exited children.
