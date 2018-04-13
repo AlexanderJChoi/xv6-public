@@ -319,7 +319,7 @@ int
 waitpid(int pid, int* status, int options)
 {
   struct proc *p;
-  int havekids, pid;
+  int havekids;
   struct proc *curproc = myproc();
   if(status != NULL)
     status = &curproc->exit_status; 
@@ -331,7 +331,7 @@ waitpid(int pid, int* status, int options)
       if(p->parent != curproc)
         continue;
       havekids = 1;
-      if(p->state == ZOMBIE && p->id == pid){
+      if(p->state == ZOMBIE && p->pid == pid){
         // Found one.
         pid = p->pid;
         kfree(p->kstack);
@@ -362,7 +362,7 @@ waitpid(int pid, int* status, int options)
 
 
 
-}
+
 
 
 
