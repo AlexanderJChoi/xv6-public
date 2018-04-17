@@ -530,7 +530,7 @@ fourfiles(void)
     pid = fork();
     if(pid < 0){
       printf(1, "fork failed\n");
-      exit();
+      
     }
 
     if(pid == 0){
