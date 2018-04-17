@@ -1,0 +1,37 @@
+Files Changed:
+Makefile
+
+cat.c
+echo.c
+forktest.c
+grep.c
+init.c
+kill.c
+ln.c
+ls.c
+mkdir.c
+rm.c
+sh.c
+stressfs.c
+usertests.c
+
+defs.h
+proc.c
+proc.h
+syscall.c
+syscall.h
+sysproc.c
+trap.c
+types.h
+user.h
+usys.S
+wc.c
+zombie.c
+
+How to test Correctness:
+Our user program is named waitpidtest.
+It can be run from within xv6.
+- unzip file
+- run make
+- run make qemu
+- type 'waitpidtest' [ENTER]
