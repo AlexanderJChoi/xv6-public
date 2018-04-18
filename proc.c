@@ -317,6 +317,8 @@ wait(int* status)
 int
 waitpid(int pid, int* status, int options)
 {
+  if(pid < 0) return -1; // no point searchin for a process with invalid id 
+
   struct proc *p;
   int havekids;
   struct proc *curproc = myproc();
