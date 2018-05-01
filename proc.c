@@ -399,7 +399,10 @@ scheduler(void)
     acquire(&ptable.lock);
     for(p = ptable.proc, maxPriority = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state == RUNNABLE && p->priority < maxPriority->priority) {
+         if(maxPriority->priority > 0) maxPriority->priority = maxPriority->priority - 1;
          maxPriority = p;
+      } else {
+         if(p->priority > 0) p->priority = p->priority - 1;
       }
     }
 //      if(p->state != RUNNABLE)
@@ -410,7 +413,7 @@ scheduler(void)
       c->proc = maxPriority;
       switchuvm(maxPriority);
       maxPriority->state = RUNNING;
-      maxPriority->priority = maxPriority->priority + 1; ///TEMPORARY FIX
+      maxPriority->priority = maxPriority->priority + 2; ///TEMPORARY FIX
 
       swtch(&(c->scheduler), maxPriority->context);
       switchkvm();
