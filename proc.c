@@ -362,6 +362,7 @@ waitpid(int pid, int* status, int options)
 int
 setpriority(int p) 
 {
+  if(p < 0) return -1;
   struct proc *curproc = myproc();
 
   curproc->priority = p;
@@ -397,27 +398,34 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc, maxPriority = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state == RUNNABLE && p->priority > maxPriority->priority) {
+      if(p->state == RUNNABLE && p->priority < maxPriority->priority) {
          maxPriority = p;
       }
     }
-
+//      if(p->state != RUNNABLE)
+//       continue;
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
       c->proc = maxPriority;
       switchuvm(maxPriority);
       maxPriority->state = RUNNING;
+      maxPriority->priority = maxPriority->priority + 1; ///TEMPORARY FIX
 
       swtch(&(c->scheduler), maxPriority->context);
       switchkvm();
 
+//      c->proc = p;
+//      switchuvm(p);
+//      p->state = RUNNING;
+
+//      swtch(&(c->scheduler), p->context);
+//      switchkvm();
+      
       // Process is done running for now.
       // It should have changed its p->state before coming back.
       c->proc = 0;
-
-    release(&ptable.lock);
-
+      release(&ptable.lock);
   }
 }
 
