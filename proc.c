@@ -359,7 +359,14 @@ waitpid(int pid, int* status, int options)
   }
 }
 
+int
+setpriority(int p) 
+{
+  struct proc *curproc = myproc();
 
+  curproc->priority = p;
+  return 0;
+}
 
 
 
