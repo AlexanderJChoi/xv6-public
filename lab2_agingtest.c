@@ -31,6 +31,7 @@ int PScheduler(void){
               printf(1, "This is child with PID %d, running with priority 5\n", getpid());
               setpriority(5);
               sleep(500);
+              
               printf(1, "This is the child with PID %d, exiting\n", getpid());
               exit(0);
             } else {
@@ -53,7 +54,6 @@ int PScheduler(void){
             ret_pid = wait(&exit_status);
             printf(1, " - This is the parent: child with PID# %d has finished with status %d \n", ret_pid, exit_status);
         }
-        printf(1, " - If processes with highest priority finished first then its correct. \n");
     }
 			
     return 0;

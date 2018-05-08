@@ -183,6 +183,7 @@ fork(void)
   int i, pid;
   struct proc *np;
   struct proc *curproc = myproc();
+  
 
   // Allocate process.
   if((np = allocproc()) == 0){
@@ -207,7 +208,7 @@ fork(void)
     if(curproc->ofile[i])
       np->ofile[i] = filedup(curproc->ofile[i]);
   np->cwd = idup(curproc->cwd);
-
+  
   safestrcpy(np->name, curproc->name, sizeof(curproc->name));
 
   pid = np->pid;
@@ -215,7 +216,8 @@ fork(void)
   acquire(&ptable.lock);
 
   np->state = RUNNABLE;
-
+  np->priority = curproc->priority;
+  cprintf("Parent prior:%d and Child prior:%d\n", curproc->priority,np->priority); 
   release(&ptable.lock);
 
   return pid;
@@ -262,6 +264,7 @@ exit(int status)//cs153
         wakeup1(initproc);
     }
   }
+  cprintf("Exiting with a  priority of %d\n", curproc->priority);
 
   // Jump into the scheduler, never to return.
   curproc->state = ZOMBIE;
@@ -363,6 +366,7 @@ int
 setpriority(int p) 
 {
   if(p < 0) return -1;
+  if(p > 20) return -1;
   struct proc *curproc = myproc();
 
   curproc->priority = p;
@@ -413,8 +417,12 @@ scheduler(void)
       c->proc = maxPriority;
       switchuvm(maxPriority);
       maxPriority->state = RUNNING;
-      maxPriority->priority = maxPriority->priority + 2; ///TEMPORARY FIX
-
+      if(maxPriority->priority > 19) {
+         maxPriority->priority = 20; 
+      }
+      else {
+        maxPriority->priority = maxPriority->priority + 2; 
+      }
       swtch(&(c->scheduler), maxPriority->context);
       switchkvm();
 
