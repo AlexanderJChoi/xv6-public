@@ -1,0 +1,21 @@
+Files changed:
+Makefile
+defs.h
+lab2_agingtest.c
+lab2_test.c
+proc.c 
+proc.h
+syscall.c
+syscall.h
+sysproc.c
+user.h
+usys.S
+
+Testing:
+We have two user programs lab2_test.c and lab2_agingtest.c
+They are run from within xv6.
+ - unzip file
+ - run make
+ - run make qemu
+ - type 'lab2_test' [Enter] or 'lab2_agingtest' [Enter]
+
