@@ -30,13 +30,13 @@ int PScheduler(void){
             if(i == 0) {
               printf(1, "This is child with PID %d, running with priority 5\n", getpid());
               setpriority(5);
-              sleep(2000);
+              sleep(500);
               printf(1, "This is the child with PID %d, exiting\n", getpid());
               exit(0);
             } else {
               printf(1, "This is the child with PID %d, running with priority 20\n", getpid());
               setpriority(20);
-              sleep(2000);
+              sleep(500);
               printf(1, "This is the child with PID %d, exiting\n", getpid());
               exit(0);
             } 
