@@ -53,7 +53,7 @@ int PScheduler(void){
             ret_pid = wait(&exit_status);
             printf(1, " - This is the parent: child with PID# %d has finished with status %d \n", ret_pid, exit_status);
         }
-        printf(1, " - If processes with highest priority finished first then its correct. \n");
+        printf(1, " - If processes finish at about the same time it is correct. \n");
     }
 			
     return 0;
